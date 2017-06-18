@@ -41,12 +41,8 @@ GPIO.output(GREEN_LIGHT, False)
 signal.signal(signal.SIGINT, cleanupLights)
 
 while True:
-	if (GPIO.input(DOOR_SENSOR_PIN)):
-		oldIsOpen = isOpen
-		isOpen = True
-	else:
-		oldIsOpen = isOpen
-		isOpen = False
+	oldIsOpen = isOpen
+	isOpen = GPIO.input(DOOR_SENSOR_PIN)
 
 	if (isOpen and (isOpen != oldIsOpen)):
 		print "Space is unoccupied!"

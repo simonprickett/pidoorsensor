@@ -16,12 +16,8 @@ oldIsOpen = None
 GPIO.setup(DOOR_SENSOR_PIN, GPIO.IN, pull_up_down = GPIO.PUD_UP)
 
 while True:
-	if (GPIO.input(DOOR_SENSOR_PIN)):
-		oldIsOpen = isOpen
-		isOpen = True
-	else:
-		oldIsOpen = isOpen
-		isOpen = False
+	oldIsOpen = isOpen
+	isOpen = GPIO.input(DOOR_SENSOR_PIN)
 
 	if (isOpen and (isOpen != oldIsOpen)):
 		print "Door open!"
