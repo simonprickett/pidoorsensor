@@ -19,6 +19,7 @@ GPIO.setmode(GPIO.BCM)
 # wires attached to, the other should be attached to a ground pin.
 LEFT_DOOR_SENSOR_PIN = 12
 LEFT_RED_LIGHT = 19
+LEFT_YELLOW_LIGHT = 13
 LEFT_GREEN_LIGHT = 26
 RIGHT_DOOR_SENSOR_PIN = 18
 RIGHT_RED_LIGHT = 3
@@ -37,6 +38,7 @@ GPIO.setup(RIGHT_DOOR_SENSOR_PIN, GPIO.IN, pull_up_down = GPIO.PUD_UP)
 
 # Set up the light pins.
 GPIO.setup(LEFT_RED_LIGHT, GPIO.OUT)
+GPIO.setup(LEFT_YELLOW_LIGHT, GPIO.OUT)
 GPIO.setup(LEFT_GREEN_LIGHT, GPIO.OUT)
 GPIO.setup(RIGHT_RED_LIGHT, GPIO.OUT)
 GPIO.setup(RIGHT_YELLOW_LIGHT, GPIO.OUT)
@@ -44,25 +46,21 @@ GPIO.setup(RIGHT_GREEN_LIGHT, GPIO.OUT)
 
 # Make sure all lights are off.
 GPIO.output(LEFT_RED_LIGHT, False)
+GPIO.output(LEFT_YELLOW_LIGHT, False)
 GPIO.output(LEFT_GREEN_LIGHT, False)
+GPIO.output(RIGHT_RED_LIGHT, False)
+GPIO.output(RIGHT_YELLOW_LIGHT, False)
+GPIO.output(RIGHT_GREEN_LIGHT, False)
 
 # Set the cleanup handler for when user hits Ctrl-C to exit
 signal.signal(signal.SIGINT, cleanupLights)
 
 while True:
-	if (GPIO.input(LEFT_DOOR_SENSOR_PIN)):
-		leftOldIsOpen = leftIsOpen
-		leftIsOpen = True
-	else:
-		leftOldIsOpen = leftIsOpen
-		leftIsOpen = False
+	leftOldIsOpen = leftIsOpen
+	leftIsOpen = GPIO.input(LEFT_DOOR_SENSOR_PIN)
 
-	if (GPIO.input(RIGHT_DOOR_SENSOR_PIN)):
-		rightOldIsOpen = rightIsOpen
-		rightIsOpen = True
-	else:
-		rightOldIsOpen = rightIsOpen
-		rightIsOpen = False
+	rightOldIsOpen = rightIsOpen
+	rightIsOpen = GPIO.input(RIGHT_DOOR_SENSOR_PIN)
 
 	if (leftIsOpen and (leftIsOpen != leftOldIsOpen)):
 		print "Left space is unoccupied!"
