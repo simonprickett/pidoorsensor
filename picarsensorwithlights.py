@@ -53,4 +53,4 @@ while True:
 		GPIO.output(GREEN_LIGHT, False)
 		GPIO.output(RED_LIGHT, True)
 	
-	time.sleep(0.25)
+	time.sleep(0.1)

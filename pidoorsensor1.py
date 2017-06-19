@@ -10,4 +10,4 @@ while True:
 	else:
 		print "Door closed!"
 	
-	time.sleep(0.25)
+	time.sleep(0.1)

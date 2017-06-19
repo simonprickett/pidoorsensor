@@ -24,4 +24,4 @@ while True:
 	elif (isOpen != oldIsOpen):
 		print "Door closed!"
 	
-	time.sleep(0.25)
+	time.sleep(0.1)
