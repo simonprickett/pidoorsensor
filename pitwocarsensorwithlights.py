@@ -3,15 +3,6 @@ import time
 import sys
 import signal
 
-def cleanupLights(signal, frame):
-	GPIO.output(LEFT_RED_LIGHT, False)
-	GPIO.output(LEFT_GREEN_LIGHT, False)
-	GPIO.output(RIGHT_RED_LIGHT, False)
-	GPIO.output(RIGHT_YELLOW_LIGHT, False)
-	GPIO.output(RIGHT_GREEN_LIGHT, False)
-	GPIO.cleanup()
-	sys.exit(0)
-
 # Set Broadcom mode so we can address GPIO pins by number.
 GPIO.setmode(GPIO.BCM)
 
@@ -31,6 +22,16 @@ leftIsOpen = None
 leftOldIsOpen = None
 rightIsOpen = None
 leftIsOpen = None
+
+# Clean up when the user exits with keyboard interrupt
+def cleanupLights(signal, frame):
+	GPIO.output(LEFT_RED_LIGHT, False)
+	GPIO.output(LEFT_GREEN_LIGHT, False)
+	GPIO.output(RIGHT_RED_LIGHT, False)
+	GPIO.output(RIGHT_YELLOW_LIGHT, False)
+	GPIO.output(RIGHT_GREEN_LIGHT, False)
+	GPIO.cleanup()
+	sys.exit(0)
 
 # Set up the door sensor pins.
 GPIO.setup(LEFT_DOOR_SENSOR_PIN, GPIO.IN, pull_up_down = GPIO.PUD_UP)
